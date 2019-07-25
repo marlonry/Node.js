@@ -30,20 +30,20 @@ myEmitter.emit('newSale', 9); // emits events // event register and then argumen
 
 const server = http.createServer();
 
-server.on('request', (req, res) => {
+server.on('request', (req, res) => { // observer and call back function is passed
 
     console.log(req.url);
 
     console.log('Request Received!');
     res.end('Request Received');
 })
-server.on('request', (req, res) => {
+server.on('request', (req, res) => { //other observer listening to more events
     console.log('Another Request :D');
 })
 server.on('close', () => {
     console.log("Server closed");
 })
 
-server.listen(8000, '127.0.0.1', () => {
+server.listen(8000, '127.0.0.1', () => { // another observer
     console.log('Waiting for incoming request...');
 });
