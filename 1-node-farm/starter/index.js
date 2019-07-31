@@ -38,29 +38,40 @@ const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.htm
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const dataObj = JSON.parse(data);
 
-console.log(slugify('Fresh', { lower: true }));
+console.log(slugify('Fresh', {
+  lower: true
+})); // showing a normal text instead of the query  example: show fresh instead of ?id=123-fresh 
 // SERVER
 const server = http.createServer((req, res) => {
   console.log(req.url); // gets the url
-  const { query, pathname } = url.parse(req.url, true); // parses url out of the browser and sends destructures the query and the pathname
+  const {
+    query,
+    pathname
+  } = url.parse(req.url, true); // parses url out of the browser and sends destructures the query and the pathname
 
   // OVERVIEW
   if (pathname === '/' || pathname === '/overview') {
-    res.writeHead(200, { 'Content-type': 'text/html' });
+    res.writeHead(200, {
+      'Content-type': 'text/html'
+    });
     const cardsHtml = dataObj.map(el => replaceHTML(tempCard, el)).join('');
     const output = tempOverview.replace('{%PRODUCT_CARDS%}', cardsHtml);
     res.end(output);
 
     // PRODUCT PAGE
   } else if (pathname === '/product') {
-    res.writeHead(200, { 'Content-type': 'text/html' });
+    res.writeHead(200, {
+      'Content-type': 'text/html'
+    });
     const product = dataObj[query.id];
     const output = replaceHTML(tempProduct, product);
     res.end(output);
 
     // API
   } else if (pathname === '/api') {
-    res.writeHead(200, { 'Content-type': 'application/json' });
+    res.writeHead(200, {
+      'Content-type': 'application/json'
+    });
     res.end(data);
 
     // NOT FOUND
